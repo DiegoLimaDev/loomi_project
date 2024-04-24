@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: loomi-db
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: 'loomi-db'
+      POSTGRES_PASSWORD: '1234'
+      POSTGRES_USER: 'postgres'
+
+  backend:
+    container_name: nestjs_project
+    build: 
+      dockerfile: Dockerfile
+    ports:
+      - '8000:3000'
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://postgres:1234@db/loomi-db

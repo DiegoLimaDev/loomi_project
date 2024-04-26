@@ -13,7 +13,6 @@ export class AdminService implements IAdmin {
   async create(admin: AdminDomain): Promise<AdminDomain> {
     const hash = await bcrypt.hash(admin.password, 10);
     const date = new Date();
-    console.log(hash);
 
     return await this.adminRepo.save({
       ...admin,
@@ -41,5 +40,9 @@ export class AdminService implements IAdmin {
     this.adminRepo.delete(id);
 
     return true;
+  }
+
+  async getOneByEmail(email: string): Promise<AdminDomain> {
+    return await this.adminRepo.findOneBy({ email });
   }
 }

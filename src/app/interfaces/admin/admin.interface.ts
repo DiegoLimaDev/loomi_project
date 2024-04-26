@@ -8,4 +8,6 @@ export interface IAdmin {
   getAll(): Promise<AdminDomain[]>;
 
   delete(id: number): Promise<boolean>;
+
+  getOneByEmail(email: string): Promise<AdminDomain>;
 }

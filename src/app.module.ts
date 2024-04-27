@@ -3,11 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AdminModule } from './app/infra/admin/admin.module';
 import { AuthModule } from './app/infra/auth/auth.module';
 import { MailerModule } from './app/infra/mailer/mailer.module';
 import { JwtModule } from '@nestjs/jwt';
 import { TokenGenerationModule } from './app/infra/token-generation/token-generation.module';
+import { UserModule } from './app/infra/user/user.module';
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { TokenGenerationModule } from './app/infra/token-generation/token-genera
       synchronize: true,
       autoLoadEntities: true,
     }),
-    AdminModule,
+    UserModule,
     AuthModule,
     MailerModule,
     JwtModule,

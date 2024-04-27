@@ -1,12 +1,12 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { AdminService } from 'src/app/infra/admin/admin.service';
 import { AuthService } from 'src/app/infra/auth/auth.service';
+import { UserService } from 'src/app/infra/user/user.service';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private authService: AuthService,
-    private adminService: AdminService,
+    private userService: UserService,
   ) {}
 
   @Get('emailVerification/:token/:email')
@@ -14,7 +14,7 @@ export class AuthController {
     @Param('token') token: string,
     @Param('email') email: string,
   ): Promise<string> {
-    const user = await this.adminService.getOneByEmail(email);
+    const user = await this.userService.getOneByEmail(email);
     await this.authService.emailVerification(token, user);
 
     return `<h1 style="padding:10px;align-text:center;">Conta verificada com sucesso</h1>`;

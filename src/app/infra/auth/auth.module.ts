@@ -3,7 +3,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { AuthController } from 'src/app/api/auth/auth.controller';
-import { AdminModule } from '../admin/admin.module';
+import { UserModule } from '../user/user.module';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 
@@ -16,7 +16,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
         expiresIn: 3600,
       },
     }),
-    AdminModule,
+    UserModule,
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],

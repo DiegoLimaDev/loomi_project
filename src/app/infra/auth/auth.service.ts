@@ -4,22 +4,22 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { AdminService } from '../admin/admin.service';
 import * as bcrypt from 'bcrypt';
-import { AdminDomain } from 'src/app/entities/admin/admin.domain';
+import { UserService } from '../user/user.service';
+import { UserDomain } from 'src/app/entities/user/user.domain';
 
 @Injectable()
 export class AuthService {
   constructor(
     private jwtService: JwtService,
-    private adminService: AdminService,
+    private userService: UserService,
   ) {}
 
   async validateUser(
     email: string,
     password: string,
   ): Promise<{ accessToken: string }> {
-    const user = await this.adminService.getOneByEmail(email);
+    const user = await this.userService.getOneByEmail(email);
 
     const passwordValid = await bcrypt.compare(password, user.password);
 
@@ -32,12 +32,12 @@ export class AuthService {
     }
   }
 
-  async emailVerification(token: string, user: AdminDomain): Promise<boolean> {
+  async emailVerification(token: string, user: UserDomain): Promise<boolean> {
     if (token !== user.token) {
       throw new BadRequestException();
     }
 
-    await this.adminService.edit(user.id, { ...user, isVerified: true });
+    await this.userService.edit(user.id, { ...user, isVerified: true });
     return true;
   }
 }

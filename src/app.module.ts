@@ -8,6 +8,9 @@ import { MailerModule } from './app/infra/mailer/mailer.module';
 import { JwtModule } from '@nestjs/jwt';
 import { TokenGenerationModule } from './app/infra/token-generation/token-generation.module';
 import { UserModule } from './app/infra/user/user.module';
+import { ClientModule } from './app/infra/client/client.module';
+import { ClientController } from './app/api/client/client.controller';
+import { ProductModule } from './app/infra/product/product.module';
 
 @Module({
   imports: [
@@ -28,8 +31,10 @@ import { UserModule } from './app/infra/user/user.module';
     MailerModule,
     JwtModule,
     TokenGenerationModule,
+    ClientModule,
+    ProductModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, ClientController],
   providers: [AppService],
 })
 export class AppModule {}

@@ -5,6 +5,9 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminModule } from './app/infra/admin/admin.module';
 import { AuthModule } from './app/infra/auth/auth.module';
+import { MailerModule } from './app/infra/mailer/mailer.module';
+import { JwtModule } from '@nestjs/jwt';
+import { TokenGenerationModule } from './app/infra/token-generation/token-generation.module';
 
 @Module({
   imports: [
@@ -22,6 +25,9 @@ import { AuthModule } from './app/infra/auth/auth.module';
     }),
     AdminModule,
     AuthModule,
+    MailerModule,
+    JwtModule,
+    TokenGenerationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

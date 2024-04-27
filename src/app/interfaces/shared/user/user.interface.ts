@@ -1,4 +1,10 @@
-import { IsDate, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsDate,
+  IsNotEmpty,
+  IsString,
+  IsNumber,
+} from 'class-validator';
 
 export enum Usertype {
   Admin = 'admin',
@@ -6,6 +12,9 @@ export enum Usertype {
 }
 
 export abstract class IUser {
+  @IsNumber()
+  id?: number;
+
   @IsNotEmpty()
   @IsString()
   name: string;
@@ -25,6 +34,14 @@ export abstract class IUser {
   @IsNotEmpty()
   @IsDate()
   updatedAt?: Date;
+
+  @IsNotEmpty()
+  @IsBoolean()
+  isVerified?: boolean;
+
+  @IsNotEmpty()
+  @IsString()
+  token?: string;
 
   @IsNotEmpty()
   usertype: Usertype;

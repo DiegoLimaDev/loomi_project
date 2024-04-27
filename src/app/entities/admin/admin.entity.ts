@@ -26,6 +26,12 @@ export class Admin {
   @CreateDateColumn()
   updatedAt: Date;
 
+  @Column()
+  isVerified: boolean;
+
+  @Column()
+  token: string;
+
   @Column({ type: 'enum', enum: Usertype })
   usertype: Usertype;
 }

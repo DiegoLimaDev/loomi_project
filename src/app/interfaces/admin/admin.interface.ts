@@ -7,6 +7,8 @@ export interface IAdmin {
 
   getAll(): Promise<AdminDomain[]>;
 
+  edit(id: number, admin: AdminDomain): Promise<boolean>;
+
   delete(id: number): Promise<boolean>;
 
   getOneByEmail(email: string): Promise<AdminDomain>;

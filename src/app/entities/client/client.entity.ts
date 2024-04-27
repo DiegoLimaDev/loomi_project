@@ -3,11 +3,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { User } from '../user/user.entity';
 
 @Entity()
-export class User {
+export class Client {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -32,12 +35,10 @@ export class User {
   @CreateDateColumn()
   updatedAt: Date;
 
-  @Column()
-  isVerified: boolean;
-
-  @Column()
-  token: string;
-
   @Column({ type: 'enum', enum: Usertype })
   usertype: Usertype;
+
+  @OneToOne(() => User, (user) => user.id)
+  @JoinColumn()
+  user: User;
 }

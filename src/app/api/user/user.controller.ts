@@ -8,11 +8,14 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { ClientDomain } from 'src/app/entities/client/client.domain';
 import { UserDomain } from 'src/app/entities/user/user.domain';
 import { JwtAuthGuard } from 'src/app/infra/auth/guards/jwt.guard';
+import { ClientService } from 'src/app/infra/client/client.service';
 import { MailerService } from 'src/app/infra/mailer/mailer.service';
 import { TokenGenerationService } from 'src/app/infra/token-generation/token-generation.service';
 import { UserService } from 'src/app/infra/user/user.service';
+import { Usertype } from 'src/app/interfaces/shared/user/user.interface';
 import { IUserService } from 'src/app/interfaces/user/user.interface';
 
 @Controller('user')
@@ -21,20 +24,36 @@ export class UserController implements IUserService {
     private userService: UserService,
     private tokenGeneration: TokenGenerationService,
     private mailerService: MailerService,
+    private clientService: ClientService,
   ) {}
 
   @Post('create')
-  async create(@Body() user: UserDomain): Promise<UserDomain> {
+  async create(
+    @Body() user: UserDomain,
+    @Body('contact') contact: string,
+    @Body('address') address: string,
+  ): Promise<UserDomain | ClientDomain> {
     const token = await this.tokenGeneration.generateVerificationToken(
       user.email,
     );
     await this.mailerService.sendVerificationMail(user.email, token);
 
-    return await this.userService.create({
+    const createUser = await this.userService.create({
       ...user,
       isVerified: false,
       token: token,
     });
+
+    if (user.usertype === Usertype.Admin) return createUser;
+
+    if (user.usertype === Usertype.Client) {
+      return await this.clientService.create({
+        ...user,
+        user: createUser,
+        contact: contact,
+        address: address,
+      });
+    }
   }
 
   @Get(':id')
@@ -62,7 +81,7 @@ export class UserController implements IUserService {
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
-  async delete(@Param('id') id: number): Promise<boolean> {
+  async delete(@Param('id') id: number): Promise<{ deleted: boolean }> {
     return await this.userService.delete(id);
   }
 

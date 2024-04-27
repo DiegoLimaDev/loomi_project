@@ -13,7 +13,7 @@ export enum Usertype {
 
 export abstract class IUser {
   @IsNumber()
-  id?: number;
+  id: number;
 
   @IsNotEmpty()
   @IsString()
@@ -29,11 +29,11 @@ export abstract class IUser {
 
   @IsNotEmpty()
   @IsDate()
-  createdAt?: Date;
+  createdAt: Date;
 
   @IsNotEmpty()
   @IsDate()
-  updatedAt?: Date;
+  updatedAt: Date;
 
   @IsNotEmpty()
   @IsBoolean()

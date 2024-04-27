@@ -27,10 +27,10 @@ export class User {
   updatedAt: Date;
 
   @Column()
-  isVerified: boolean;
+  isVerified?: boolean;
 
   @Column()
-  token: string;
+  token?: string;
 
   @Column({ type: 'enum', enum: Usertype })
   usertype: Usertype;

@@ -5,6 +5,7 @@ import { MailerModule } from '../mailer/mailer.module';
 import { User } from 'src/app/entities/user/user.entity';
 import { UserService } from './user.service';
 import { UserController } from 'src/app/api/user/user.controller';
+import { ClientModule } from '../client/client.module';
 
 @Module({
   providers: [UserService],
@@ -12,6 +13,7 @@ import { UserController } from 'src/app/api/user/user.controller';
     TypeOrmModule.forFeature([User]),
     TokenGenerationModule,
     MailerModule,
+    ClientModule,
   ],
   exports: [UserService],
   controllers: [UserController],

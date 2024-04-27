@@ -40,12 +40,12 @@ export class UserService implements IUserService {
     return true;
   }
 
-  async delete(id: number): Promise<boolean> {
+  async delete(id: number): Promise<{ deleted: boolean }> {
     await this.getOne(id);
 
     this.userRepo.delete(id);
 
-    return true;
+    return { deleted: true };
   }
 
   async getOneByEmail(email: string): Promise<UserDomain> {

@@ -34,6 +34,12 @@ export class AdminService implements IAdmin {
     return await this.adminRepo.find();
   }
 
+  async edit(id: number, admin: AdminDomain): Promise<boolean> {
+    const date = new Date();
+    await this.adminRepo.update({ id }, { ...admin, updatedAt: date });
+    return true;
+  }
+
   async delete(id: number): Promise<boolean> {
     await this.getOne(id);
 

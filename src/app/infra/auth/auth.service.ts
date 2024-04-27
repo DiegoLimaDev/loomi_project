@@ -1,7 +1,12 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AdminService } from '../admin/admin.service';
 import * as bcrypt from 'bcrypt';
+import { AdminDomain } from 'src/app/entities/admin/admin.domain';
 
 @Injectable()
 export class AuthService {
@@ -25,5 +30,14 @@ export class AuthService {
     } else {
       throw new UnauthorizedException('Check your credentials');
     }
+  }
+
+  async emailVerification(token: string, user: AdminDomain): Promise<boolean> {
+    if (token !== user.token) {
+      throw new BadRequestException();
+    }
+
+    await this.adminService.edit(user.id, { ...user, isVerified: true });
+    return true;
   }
 }

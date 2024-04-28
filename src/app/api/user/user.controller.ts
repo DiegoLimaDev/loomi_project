@@ -15,7 +15,7 @@ import { ClientService } from 'src/app/infra/client/client.service';
 import { MailerService } from 'src/app/infra/mailer/mailer.service';
 import { TokenGenerationService } from 'src/app/infra/token-generation/token-generation.service';
 import { UserService } from 'src/app/infra/user/user.service';
-import { Usertype } from 'src/app/interfaces/shared/user/user.interface';
+import { Usertype } from 'src/app/interfaces/shared/user/user.abstract';
 import { IUserService } from 'src/app/interfaces/user/user.interface';
 
 @Controller('user')
@@ -27,7 +27,7 @@ export class UserController implements IUserService {
     private clientService: ClientService,
   ) {}
 
-  @Post('create')
+  @Post()
   async create(
     @Body() user: UserDomain,
     @Body('contact') contact: string,
@@ -49,9 +49,10 @@ export class UserController implements IUserService {
     if (user.usertype === Usertype.Client) {
       return await this.clientService.create({
         ...user,
-        user: createUser,
-        contact: contact,
+        contact: 'contact',
         address: address,
+        user: createUser,
+        status: false,
       });
     }
   }

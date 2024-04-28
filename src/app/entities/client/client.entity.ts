@@ -1,4 +1,3 @@
-import { Usertype } from 'src/app/interfaces/shared/user/user.interface';
 import {
   Column,
   CreateDateColumn,
@@ -8,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from '../user/user.entity';
+import { Usertype } from 'src/app/interfaces/shared/user/user.abstract';
 
 @Entity()
 export class Client {
@@ -38,7 +38,10 @@ export class Client {
   @Column({ type: 'enum', enum: Usertype })
   usertype: Usertype;
 
-  @OneToOne(() => User, (user) => user.id)
+  @Column()
+  status: boolean;
+
+  @OneToOne(() => User, (user) => user.id, { cascade: true })
   @JoinColumn()
   user: User;
 }

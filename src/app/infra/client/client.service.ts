@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClientDomain } from 'src/app/entities/client/client.domain';
 import { Client } from 'src/app/entities/client/client.entity';
+import { UserDomain } from 'src/app/entities/user/user.domain';
 import { IClientService } from 'src/app/interfaces/client/client.interface';
 import { Repository } from 'typeorm';
 
@@ -33,10 +34,21 @@ export class ClientService implements IClientService {
   }
 
   async delete(id: number): Promise<{ deleted: boolean }> {
-    await this.getOne(id);
-
-    this.clientRepo.delete(id);
+    const client = await this.getOne(id);
+    await this.edit(id, { ...client, status: false });
 
     return { deleted: true };
+  }
+
+  async deleteLogical(id: number): Promise<{ deleted: boolean }> {
+    await this.clientRepo.delete(id);
+
+    return { deleted: true };
+  }
+
+  async getOneByFkUserId(user: UserDomain): Promise<ClientDomain> {
+    const client = await this.clientRepo.findOneBy({ user });
+
+    return client;
   }
 }

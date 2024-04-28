@@ -6,6 +6,7 @@ import { AuthController } from 'src/app/api/auth/auth.controller';
 import { UserModule } from '../user/user.module';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { ClientModule } from '../client/client.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
       },
     }),
     UserModule,
+    ClientModule,
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],

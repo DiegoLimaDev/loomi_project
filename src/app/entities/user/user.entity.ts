@@ -1,4 +1,4 @@
-import { Usertype } from 'src/app/interfaces/shared/user/user.interface';
+import { Usertype } from 'src/app/interfaces/shared/user/user.abstract';
 import {
   Column,
   CreateDateColumn,

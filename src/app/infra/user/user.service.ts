@@ -5,10 +5,15 @@ import * as bcrypt from 'bcrypt';
 import { IUserService } from 'src/app/interfaces/user/user.interface';
 import { UserDomain } from 'src/app/entities/user/user.domain';
 import { User } from 'src/app/entities/user/user.entity';
+import { ClientService } from '../client/client.service';
+import { Usertype } from 'src/app/interfaces/shared/user/user.abstract';
 
 @Injectable()
 export class UserService implements IUserService {
-  constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
+  constructor(
+    @InjectRepository(User) private userRepo: Repository<User>,
+    private clientService: ClientService,
+  ) {}
 
   async create(user: UserDomain): Promise<UserDomain> {
     const hash = await bcrypt.hash(user.password, 10);
@@ -41,7 +46,12 @@ export class UserService implements IUserService {
   }
 
   async delete(id: number): Promise<{ deleted: boolean }> {
-    await this.getOne(id);
+    const user = await this.getOne(id);
+
+    if (user.usertype === Usertype.Client) {
+      const client = await this.clientService.getOneByFkUserId(user);
+      await this.clientService.deleteLogical(client.id);
+    }
 
     this.userRepo.delete(id);
 

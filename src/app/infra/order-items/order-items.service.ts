@@ -25,12 +25,24 @@ export class OrderItemsService implements IOrderItems {
 
     const product = await this.productService.getOne(productId);
 
-    return await this.orderItemsRepo.save({
+    const addItems = await this.orderItemsRepo.save({
       order: order,
       product: product,
       pricePerUnit: product.price,
       qty,
       subtotal: qty * product.price,
     });
+
+    await this.orderService.edit(orderId, {
+      ...order,
+      total: order.total + addItems.subtotal,
+    });
+
+    return addItems;
+  }
+
+  async getItemsInOrder(orderId: number): Promise<OrderItemsDomain[]> {
+    const order = await this.orderService.getOne(orderId);
+    return await this.orderItemsRepo.find({ where: { order } });
   }
 }

@@ -23,6 +23,7 @@ export class OrderService implements IOrderService {
       createdAt: date,
       updatedAt: date,
       client: client,
+      total: 0,
     });
   }
 

@@ -27,8 +27,9 @@ export class AuthService {
     const passwordValid = await bcrypt.compare(password, user.password);
 
     if (user && passwordValid) {
-      const { email } = user;
-      const token = this.jwtService.sign({ email });
+      const { email, usertype } = user;
+
+      const token = this.jwtService.sign({ email, usertype });
       return { accessToken: token };
     } else {
       throw new UnauthorizedException('Check your credentials');

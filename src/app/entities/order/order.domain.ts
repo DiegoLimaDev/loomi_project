@@ -26,5 +26,9 @@ export class OrderDomain {
   updatedAt: Date;
 
   @IsNotEmpty()
+  @IsNumber()
+  total: number;
+
+  @IsNotEmpty()
   client: ClientDomain;
 }

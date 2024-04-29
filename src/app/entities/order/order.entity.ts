@@ -17,6 +17,9 @@ export class Order {
   @Column()
   updatedAt: Date;
 
+  @Column({ type: 'real' })
+  total: number;
+
   @ManyToOne(() => Client, (client) => client.id)
   client: ClientDomain;
 }

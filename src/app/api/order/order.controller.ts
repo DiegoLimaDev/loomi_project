@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { OrderDomain } from 'src/app/entities/order/order.domain';
 import { JwtAuthGuard } from 'src/app/infra/auth/guards/jwt.guard';
+import { RolesGuard } from 'src/app/infra/auth/guards/role.guard';
 import { OrderService } from 'src/app/infra/order/order.service';
 import { IOrderService } from 'src/app/interfaces/order/order.interface';
 
@@ -32,6 +33,7 @@ export class OrderController implements IOrderService {
   }
 
   @Get()
+  @UseGuards(RolesGuard)
   async getAll(): Promise<OrderDomain[]> {
     return await this.orderService.getAll();
   }
@@ -45,6 +47,7 @@ export class OrderController implements IOrderService {
   }
 
   @Delete(':id')
+  @UseGuards(RolesGuard)
   async delete(@Param('id') id: number): Promise<{ deleted: boolean }> {
     return await this.orderService.delete(id);
   }

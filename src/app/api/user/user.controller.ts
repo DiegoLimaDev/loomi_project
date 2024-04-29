@@ -11,6 +11,7 @@ import {
 import { ClientDomain } from 'src/app/entities/client/client.domain';
 import { UserDomain } from 'src/app/entities/user/user.domain';
 import { JwtAuthGuard } from 'src/app/infra/auth/guards/jwt.guard';
+import { RolesGuard } from 'src/app/infra/auth/guards/role.guard';
 import { ClientService } from 'src/app/infra/client/client.service';
 import { MailerService } from 'src/app/infra/mailer/mailer.service';
 import { TokenGenerationService } from 'src/app/infra/token-generation/token-generation.service';
@@ -58,7 +59,7 @@ export class UserController implements IUserService {
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   async getOne(@Param('id') id: number): Promise<UserDomain> {
     return await this.userService.getOne(id);
   }
@@ -70,7 +71,7 @@ export class UserController implements IUserService {
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   async edit(
     @Param('id') id: number,
     @Body() user: UserDomain,
@@ -81,13 +82,13 @@ export class UserController implements IUserService {
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   async delete(@Param('id') id: number): Promise<{ deleted: boolean }> {
     return await this.userService.delete(id);
   }
 
   @Get('email')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   async getOneByEmail(@Param('email') email: string): Promise<UserDomain> {
     return await this.userService.getOneByEmail(email);
   }

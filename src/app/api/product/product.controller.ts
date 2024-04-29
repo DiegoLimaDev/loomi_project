@@ -12,6 +12,7 @@ import { ProductService } from 'src/app/infra/product/product.service';
 import { JwtAuthGuard } from 'src/app/infra/auth/guards/jwt.guard';
 import { IProdcutService } from 'src/app/interfaces/product/product.interface';
 import { ProductDomain } from 'src/app/entities/product/product.domain';
+import { RolesGuard } from 'src/app/infra/auth/guards/role.guard';
 
 @Controller('product')
 @UseGuards(JwtAuthGuard)
@@ -19,6 +20,7 @@ export class ProductController implements IProdcutService {
   constructor(private productService: ProductService) {}
 
   @Post()
+  @UseGuards(RolesGuard)
   async create(@Body() product: ProductDomain): Promise<ProductDomain> {
     return await this.productService.create(product);
   }
@@ -56,6 +58,7 @@ export class ProductController implements IProdcutService {
   }
 
   @Patch(':id')
+  @UseGuards(RolesGuard)
   async edit(
     @Param('id') id: number,
     @Body() product: ProductDomain,
@@ -64,6 +67,7 @@ export class ProductController implements IProdcutService {
   }
 
   @Delete(':id')
+  @UseGuards(RolesGuard)
   async delete(@Param('id') id: number): Promise<boolean> {
     return await this.productService.delete(id);
   }

@@ -10,6 +10,7 @@ import {
 import { ClientDomain } from 'src/app/entities/client/client.domain';
 import { UserDomain } from 'src/app/entities/user/user.domain';
 import { JwtAuthGuard } from 'src/app/infra/auth/guards/jwt.guard';
+import { RolesGuard } from 'src/app/infra/auth/guards/role.guard';
 import { ClientService } from 'src/app/infra/client/client.service';
 import { IClientService } from 'src/app/interfaces/client/client.interface';
 
@@ -24,6 +25,7 @@ export class ClientController implements IClientService {
   }
 
   @Get()
+  @UseGuards(RolesGuard)
   async getAll(): Promise<ClientDomain[]> {
     return await this.clientService.getAll();
   }
@@ -37,6 +39,7 @@ export class ClientController implements IClientService {
   }
 
   @Delete(':id')
+  @UseGuards(RolesGuard)
   async delete(@Param('id') id: number): Promise<{ deleted: boolean }> {
     return await this.clientService.delete(id);
   }
@@ -47,6 +50,7 @@ export class ClientController implements IClientService {
   }
 
   @Get('byUser')
+  @UseGuards(RolesGuard)
   async getOneByFkUserId(@Body() user: UserDomain): Promise<ClientDomain> {
     return await this.clientService.getOneByFkUserId(user);
   }

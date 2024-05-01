@@ -1,7 +1,7 @@
 import { OrderDomain } from 'src/app/entities/order/order.domain';
 
 export interface IOrderService {
-  create(order: OrderDomain, clientId: number): Promise<OrderDomain>;
+  create(clientId: number): Promise<OrderDomain>;
 
   getOne(id: number): Promise<OrderDomain>;
 

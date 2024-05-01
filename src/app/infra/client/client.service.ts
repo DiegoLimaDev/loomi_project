@@ -5,6 +5,7 @@ import { Client } from 'src/app/entities/client/client.entity';
 import { UserDomain } from 'src/app/entities/user/user.domain';
 import { IClientService } from 'src/app/interfaces/client/client.interface';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class ClientService implements IClientService {
@@ -13,7 +14,9 @@ export class ClientService implements IClientService {
   ) {}
 
   async create(client: ClientDomain): Promise<ClientDomain> {
-    return await this.clientRepo.save(client);
+    const hash = await bcrypt.hash(client.password, 10);
+
+    return await this.clientRepo.save({ ...client, password: hash });
   }
 
   async getOne(id: number): Promise<ClientDomain> {

@@ -7,3 +7,5 @@
 #### Dessa maneira o projeto ficara disponível na porta http://localhost:8000/
 
 #### Caso opte pela opção com node, utilize os comandos `npm i` e depois `npm run dev` e o projeto rodará na porta: http://localhost:3000/
+
+#### http://localhost:8000/api ou http://localhost:3000/ mostra a documentação do swagger

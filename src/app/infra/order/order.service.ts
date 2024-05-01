@@ -5,6 +5,7 @@ import { Order } from 'src/app/entities/order/order.entity';
 import { IOrderService } from 'src/app/interfaces/order/order.interface';
 import { Repository } from 'typeorm';
 import { ClientService } from '../client/client.service';
+import { createObjectCsvWriter } from 'csv-writer';
 
 @Injectable()
 export class OrderService implements IOrderService {
@@ -52,5 +53,49 @@ export class OrderService implements IOrderService {
     await this.edit(id, { ...order, status: OrderStatus.Canceled });
 
     return { deleted: true };
+  }
+
+  async getReportByDate(date: string, filePath: string): Promise<any> {
+    const [dd, mm, yyyy] = date.split('-');
+    const createDate = new Date(`${yyyy}-${mm}-${dd}`);
+    const dateString = createDate.toISOString().split('T')[0];
+
+    const status = 'confirmed' || 'preparing' || 'sent' || 'delivered';
+
+    const data = await this.orderRepo
+      .createQueryBuilder('order')
+      .where(`DATE(order.createdAt) = :date`, { date: dateString })
+      .andWhere(`order.status = :status`, { status })
+      .getMany();
+
+    const sumTotal = data.reduce((prev, next) => prev + next.total, 0);
+    const { length } = data;
+    const media = sumTotal / length;
+
+    const dataToExport = [
+      ...data,
+      { quantidadeVendas: length },
+      { sumTotal },
+      { mediaPorVenda: media },
+    ];
+
+    const headers = [
+      'id',
+      'status',
+      'createdAt',
+      'updatedAt',
+      'total',
+      'quantidadeVendas',
+      'sumTotal',
+      'mediaPorVenda',
+    ];
+
+    const csvWriter = createObjectCsvWriter({
+      path: filePath,
+      header: headers.map((item) => ({ id: item, title: item })),
+    });
+
+    await csvWriter.writeRecords(dataToExport);
+    return `Arquivo CSV exportado para: ${filePath}`;
   }
 }

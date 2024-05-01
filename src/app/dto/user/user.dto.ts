@@ -10,7 +10,7 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
-  @ApiProperty({ required: true, example: 'diego@gmail.com' })
+  @ApiProperty({ required: true, example: 'xxdiegolsxx@gmail.com' })
   email: string;
 
   @IsNotEmpty()

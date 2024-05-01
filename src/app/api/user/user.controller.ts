@@ -101,7 +101,7 @@ export class UserController implements IUserService {
 
   @Get('email/:email')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @ApiParam({ name: 'email', example: 'diego@gmail.com' })
+  @ApiParam({ name: 'email', example: 'xxdiegolsxx@gmail.com' })
   @ApiOperation({ description: 'Get em um usuário por email' })
   async getOneByEmail(@Param('email') email: string): Promise<UserDomain> {
     return await this.userService.getOneByEmail(email);

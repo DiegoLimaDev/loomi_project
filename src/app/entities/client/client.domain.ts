@@ -1,6 +1,6 @@
 import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 import { User } from '../user/user.entity';
-import { IUser } from 'src/app/interfaces/shared/user/user.abstract';
+import { IUser } from 'src/app/entities/user/user.abstract';
 
 export class ClientDomain extends IUser {
   @IsNotEmpty()

@@ -2,14 +2,12 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { OrderItemsDomain } from 'src/app/entities/order-items/order-items.domain';
 import { OrderItems } from 'src/app/entities/order-items/order-items.entity';
-import {
-  IOrderItems,
-  OrderItemDto,
-} from 'src/app/interfaces/order-items/order-items.interface';
+import { IOrderItems } from 'src/app/interfaces/order-items/order-items.interface';
 import { Repository } from 'typeorm';
 import { ProductService } from '../product/product.service';
 import { OrderService } from '../order/order.service';
 import { OrderStatus } from 'src/app/entities/order/order.domain';
+import { OrderItemDto } from 'src/app/dto/order-item/order-item.dto';
 
 @Injectable()
 export class OrderItemsService implements IOrderItems {

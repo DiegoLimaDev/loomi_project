@@ -8,7 +8,7 @@ import * as bcrypt from 'bcrypt';
 import { UserService } from '../user/user.service';
 import { UserDomain } from 'src/app/entities/user/user.domain';
 import { ClientService } from '../client/client.service';
-import { Usertype } from 'src/app/interfaces/shared/user/user.abstract';
+import { Usertype } from 'src/app/entities/user/user.abstract';
 
 @Injectable()
 export class AuthService {

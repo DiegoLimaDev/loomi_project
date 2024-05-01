@@ -6,7 +6,7 @@ import { IUserService } from 'src/app/interfaces/user/user.interface';
 import { UserDomain } from 'src/app/entities/user/user.domain';
 import { User } from 'src/app/entities/user/user.entity';
 import { ClientService } from '../client/client.service';
-import { Usertype } from 'src/app/interfaces/shared/user/user.abstract';
+import { Usertype } from 'src/app/entities/user/user.abstract';
 
 @Injectable()
 export class UserService implements IUserService {

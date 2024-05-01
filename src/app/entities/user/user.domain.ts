@@ -1,3 +1,3 @@
-import { IUser } from 'src/app/interfaces/shared/user/user.abstract';
+import { IUser } from 'src/app/entities/user/user.abstract';
 
 export class UserDomain extends IUser {}

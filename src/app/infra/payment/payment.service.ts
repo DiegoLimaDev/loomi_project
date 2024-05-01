@@ -6,6 +6,7 @@ import { OrderStatus } from 'src/app/entities/order/order.domain';
 import { IPaymentService } from 'src/app/interfaces/payment/payment.interface';
 import { ProductService } from '../product/product.service';
 import { OrderItemsService } from '../order-items/order-items.service';
+import { PaymentDto } from 'src/app/dto/payment/payment.dto';
 
 @Injectable()
 export class PaymentService implements IPaymentService {
@@ -20,7 +21,7 @@ export class PaymentService implements IPaymentService {
   }
 
   async processPayment(
-    amount: number,
+    amount: PaymentDto,
     orderId: number,
   ): Promise<{ paymentStatus: string }> {
     const paymentMethod = await this.stripe.paymentMethods.create({
@@ -52,7 +53,7 @@ export class PaymentService implements IPaymentService {
     }
 
     const paymentIntent = await this.stripe.paymentIntents.create({
-      amount,
+      amount: amount.amount,
       currency: 'brl',
       payment_method: paymentMethod.id,
       confirm,

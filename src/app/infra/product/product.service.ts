@@ -13,6 +13,10 @@ export class ProductService implements IProdcutService {
 
   async create(product: ProductDomain): Promise<ProductDomain> {
     const date = new Date();
+
+    if (product.stock < 0)
+      throw new BadRequestException(`The product stock can't be negative`);
+
     return await this.productRepo.save({
       ...product,
       createdAt: date,

@@ -10,6 +10,9 @@ export class OrderItems {
   id: number;
 
   @Column()
+  itemName: string;
+
+  @Column()
   qty: number;
 
   @Column({ type: 'real' })

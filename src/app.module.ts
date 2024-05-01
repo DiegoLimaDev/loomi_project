@@ -15,10 +15,12 @@ import { OrderModule } from './app/infra/order/order.module';
 import { OrderController } from './app/api/order/order.controller';
 import { OrderItemsModule } from './app/infra/order-items/order-items.module';
 import { OrderItemsController } from './app/api/order-items/order-items.controller';
+import { PaymentModule } from './app/infra/payment/payment.module';
+import { PaymentController } from './app/api/payment/payment.controller';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -39,12 +41,14 @@ import { OrderItemsController } from './app/api/order-items/order-items.controll
     ProductModule,
     OrderModule,
     OrderItemsModule,
+    PaymentModule,
   ],
   controllers: [
     AppController,
     ClientController,
     OrderController,
     OrderItemsController,
+    PaymentController,
   ],
   providers: [AppService],
 })

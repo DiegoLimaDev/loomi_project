@@ -4,7 +4,7 @@ WORKDIR /user/src/app_nest
 
 COPY package.json package-lock.json ./
 
-COPY ./.env ./.env
+COPY ./.env.production ./.env
 
 RUN npm install
 

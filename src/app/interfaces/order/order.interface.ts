@@ -10,4 +10,6 @@ export interface IOrderService {
   edit(id: number, order: OrderDomain): Promise<boolean>;
 
   delete(id: number): Promise<{ deleted: boolean }>;
+
+  getReportByDate(date: string, filePath: string): Promise<any>;
 }

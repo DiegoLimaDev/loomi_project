@@ -48,4 +48,10 @@ export class OrderController implements IOrderService {
   async delete(@Param('id') id: number): Promise<{ deleted: boolean }> {
     return await this.orderService.delete(id);
   }
+
+  @Get('get/report')
+  @UseGuards(RolesGuard)
+  async getReportByDate(@Body('date') date: string): Promise<any> {
+    return await this.orderService.getReportByDate(date, 'output.csv');
+  }
 }

@@ -11,11 +11,13 @@ import { ClientModule } from '../client/client.module';
 @Module({
   imports: [
     PassportModule,
-    JwtModule.register({
-      secret: 'secretKey',
-      signOptions: {
-        expiresIn: 3600,
-      },
+    JwtModule.registerAsync({
+      useFactory: async () => ({
+        secret: process.env.JWT_SECRET_AUTH,
+        signOptions: {
+          expiresIn: 7200,
+        },
+      }),
     }),
     UserModule,
     ClientModule,

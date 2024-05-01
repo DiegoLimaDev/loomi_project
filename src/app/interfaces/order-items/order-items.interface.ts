@@ -1,3 +1,4 @@
+import { OrderItemDto } from 'src/app/dto/order-item/order-item.dto';
 import { OrderItemsDomain } from 'src/app/entities/order-items/order-items.domain';
 
 export interface IOrderItems {
@@ -11,9 +12,3 @@ export interface IOrderItems {
 
   delete(orderItemId: number): Promise<{ deleted: boolean }>;
 }
-
-export type OrderItemDto = {
-  qty: number;
-  orderId: number;
-  productId: number;
-};

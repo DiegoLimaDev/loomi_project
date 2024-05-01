@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from '../user/user.entity';
-import { Usertype } from 'src/app/interfaces/shared/user/user.abstract';
+import { Usertype } from 'src/app/entities/user/user.abstract';
 
 @Entity()
 export class Client {

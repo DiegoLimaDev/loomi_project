@@ -13,13 +13,13 @@ export class OrderService implements IOrderService {
     private clientService: ClientService,
   ) {}
 
-  async create(order: OrderDomain, clientId: number): Promise<OrderDomain> {
+  async create(clientId: number): Promise<OrderDomain> {
     const date = new Date();
 
     const client = await this.clientService.getOne(clientId);
 
     return await this.orderRepo.save({
-      ...order,
+      status: OrderStatus.Pending,
       createdAt: date,
       updatedAt: date,
       client: client,

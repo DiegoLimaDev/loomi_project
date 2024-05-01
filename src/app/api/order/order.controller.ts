@@ -20,11 +20,8 @@ export class OrderController implements IOrderService {
   constructor(private orderService: OrderService) {}
 
   @Post(':id')
-  async create(
-    @Body() order: OrderDomain,
-    @Param('id') clientId: number,
-  ): Promise<OrderDomain> {
-    return await this.orderService.create(order, clientId);
+  async create(@Param('id') clientId: number): Promise<OrderDomain> {
+    return await this.orderService.create(clientId);
   }
 
   @Get(':id')

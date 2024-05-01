@@ -2,6 +2,7 @@ import { IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { ClientDomain } from '../client/client.domain';
 
 export enum OrderStatus {
+  Pending = 'pending',
   Confirmed = 'confirmed',
   Preparing = 'preparing',
   Sent = 'sent',

@@ -6,11 +6,13 @@ import { JwtModule } from '@nestjs/jwt';
   providers: [TokenGenerationService],
   exports: [TokenGenerationService],
   imports: [
-    JwtModule.register({
-      secret: 'tokenEmail',
-      signOptions: {
-        expiresIn: 3600,
-      },
+    JwtModule.registerAsync({
+      useFactory: async () => ({
+        secret: process.env.JWT_SECRET_TOKEN_MAIL,
+        signOptions: {
+          expiresIn: 7200,
+        },
+      }),
     }),
   ],
 })

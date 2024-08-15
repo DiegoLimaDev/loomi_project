@@ -8,13 +8,20 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import { OrderItemDto } from 'src/app/dto/order-item/order-item.dto';
 import { OrderItemsDomain } from 'src/app/entities/order-items/order-items.domain';
 import { JwtAuthGuard } from 'src/app/infra/auth/guards/jwt.guard';
 import { OrderItemsService } from 'src/app/infra/order-items/order-items.service';
 import { IOrderItems } from 'src/app/interfaces/order-items/order-items.interface';
 
+@ApiBearerAuth()
 @ApiTags('Orer-Items')
 @Controller('order-items')
 @UseGuards(JwtAuthGuard)

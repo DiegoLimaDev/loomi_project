@@ -8,7 +8,13 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import { ClientDomain } from 'src/app/entities/client/client.domain';
 import { UserDomain } from 'src/app/entities/user/user.domain';
 import { JwtAuthGuard } from 'src/app/infra/auth/guards/jwt.guard';
@@ -42,7 +48,7 @@ export class UserController implements IUserService {
     const token = await this.tokenGeneration.generateVerificationToken(
       user.email,
     );
-    await this.mailerService.sendVerificationMail(user.email, token);
+    // await this.mailerService.sendVerificationMail(user.email, token);
 
     const createUser = await this.userService.create({
       ...user,
@@ -64,6 +70,7 @@ export class UserController implements IUserService {
   }
 
   @Get(':id')
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiParam({ name: 'id', example: 1 })
   @ApiOperation({ description: 'Get em um usuário por id' })
@@ -72,6 +79,7 @@ export class UserController implements IUserService {
   }
 
   @Get()
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ description: 'Get em todos os usuários' })
   async getAll(): Promise<UserDomain[]> {
@@ -79,6 +87,7 @@ export class UserController implements IUserService {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiParam({ name: 'id', example: 1 })
   @ApiOperation({ description: 'Edita um usuário por id' })
@@ -92,6 +101,7 @@ export class UserController implements IUserService {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiParam({ name: 'id', example: 1 })
   @ApiOperation({ description: 'Deleta um usuário por id' })
@@ -100,6 +110,7 @@ export class UserController implements IUserService {
   }
 
   @Get('email/:email')
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiParam({ name: 'email', example: 'xxdiegolsxx@gmail.com' })
   @ApiOperation({ description: 'Get em um usuário por email' })

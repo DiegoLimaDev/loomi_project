@@ -13,9 +13,16 @@ import { JwtAuthGuard } from 'src/app/infra/auth/guards/jwt.guard';
 import { IProdcutService } from 'src/app/interfaces/product/product.interface';
 import { ProductDomain } from 'src/app/entities/product/product.domain';
 import { RolesGuard } from 'src/app/infra/auth/guards/role.guard';
-import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import { ProductDto } from 'src/app/dto/product/product.dto';
 
+@ApiBearerAuth()
 @ApiTags('Product')
 @Controller('product')
 @UseGuards(JwtAuthGuard)

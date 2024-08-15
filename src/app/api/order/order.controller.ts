@@ -8,13 +8,19 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import { OrderDomain } from 'src/app/entities/order/order.domain';
 import { JwtAuthGuard } from 'src/app/infra/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/app/infra/auth/guards/role.guard';
 import { OrderService } from 'src/app/infra/order/order.service';
 import { IOrderService } from 'src/app/interfaces/order/order.interface';
 
+@ApiBearerAuth()
 @ApiTags('Order')
 @Controller('order')
 @UseGuards(JwtAuthGuard)

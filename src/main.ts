@@ -9,6 +9,13 @@ async function bootstrap() {
     .setTitle('loomi test')
     .setDescription('API documentation')
     .setVersion('1.0')
+    .addBearerAuth({
+      in: 'header',
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+      name: 'Authorization',
+    })
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

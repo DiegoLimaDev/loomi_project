@@ -7,7 +7,12 @@ import {
   Patch,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import { ClientDomain } from 'src/app/entities/client/client.domain';
 import { UserDomain } from 'src/app/entities/user/user.domain';
 import { JwtAuthGuard } from 'src/app/infra/auth/guards/jwt.guard';
@@ -15,6 +20,7 @@ import { RolesGuard } from 'src/app/infra/auth/guards/role.guard';
 import { ClientService } from 'src/app/infra/client/client.service';
 import { IClientService } from 'src/app/interfaces/client/client.interface';
 
+@ApiBearerAuth()
 @ApiTags('Client')
 @Controller('client')
 @UseGuards(JwtAuthGuard)

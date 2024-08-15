@@ -1,10 +1,17 @@
 import { Body, Controller, Param, Post, UseGuards } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import { PaymentDto } from 'src/app/dto/payment/payment.dto';
 import { JwtAuthGuard } from 'src/app/infra/auth/guards/jwt.guard';
 import { PaymentService } from 'src/app/infra/payment/payment.service';
 import { IPaymentService } from 'src/app/interfaces/payment/payment.interface';
 
+@ApiBearerAuth()
 @ApiTags('Payment')
 @Controller('payment')
 @UseGuards(JwtAuthGuard)

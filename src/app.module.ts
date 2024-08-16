@@ -17,6 +17,8 @@ import { PaymentModule } from './app/infra/payment/payment.module';
 import { PaymentController } from './app/api/payment/payment.controller';
 import { AwsModule } from './app/infra/aws/aws.module';
 import { AwsController } from './app/api/aws/aws.controller';
+import { RedisModule } from './app/infra/redis/redis.module';
+import { RedisController } from './app/api/redis/redis.controller';
 
 @Module({
   imports: [
@@ -43,6 +45,7 @@ import { AwsController } from './app/api/aws/aws.controller';
     OrderItemsModule,
     PaymentModule,
     AwsModule,
+    RedisModule,
   ],
   controllers: [
     ClientController,
@@ -50,6 +53,7 @@ import { AwsController } from './app/api/aws/aws.controller';
     OrderItemsController,
     PaymentController,
     AwsController,
+    RedisController,
   ],
   providers: [],
 })

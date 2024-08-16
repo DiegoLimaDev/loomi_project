@@ -22,7 +22,7 @@ import { OrderItemsService } from 'src/app/infra/order-items/order-items.service
 import { IOrderItems } from 'src/app/interfaces/order-items/order-items.interface';
 
 @ApiBearerAuth()
-@ApiTags('Orer-Items')
+@ApiTags('Order-Items')
 @Controller('order-items')
 @UseGuards(JwtAuthGuard)
 export class OrderItemsController implements IOrderItems {

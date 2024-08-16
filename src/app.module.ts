@@ -15,6 +15,8 @@ import { OrderItemsModule } from './app/infra/order-items/order-items.module';
 import { OrderItemsController } from './app/api/order-items/order-items.controller';
 import { PaymentModule } from './app/infra/payment/payment.module';
 import { PaymentController } from './app/api/payment/payment.controller';
+import { AwsModule } from './app/infra/aws/aws.module';
+import { AwsController } from './app/api/aws/aws.controller';
 
 @Module({
   imports: [
@@ -40,12 +42,14 @@ import { PaymentController } from './app/api/payment/payment.controller';
     OrderModule,
     OrderItemsModule,
     PaymentModule,
+    AwsModule,
   ],
   controllers: [
     ClientController,
     OrderController,
     OrderItemsController,
     PaymentController,
+    AwsController,
   ],
   providers: [],
 })
